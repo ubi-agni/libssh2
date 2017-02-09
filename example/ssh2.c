@@ -35,6 +35,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
 
 const char *keyfile1="~/.ssh/id_rsa.pub";
@@ -113,7 +114,7 @@ int main(int argc, char *argv[])
     sin.sin_addr.s_addr = hostaddr;
     if (connect(sock, (struct sockaddr*)(&sin),
                 sizeof(struct sockaddr_in)) != 0) {
-        fprintf(stderr, "failed to connect!\n");
+        fprintf(stderr, "failed to connect: %s\n", strerror(errno));
         return -1;
     }
 
@@ -122,7 +123,9 @@ int main(int argc, char *argv[])
      */
     session = libssh2_session_init();
     if (libssh2_session_handshake(session, sock)) {
-        fprintf(stderr, "Failure establishing SSH session\n");
+        char *err_msg;
+        libssh2_session_last_error(session, &err_msg, 0, 0);
+        fprintf(stderr, "Failure establishing SSH session: %s\n", err_msg);
         return -1;
     }
 
