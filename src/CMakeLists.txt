@@ -371,7 +371,7 @@ install(FILES
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(TARGETS libssh2
-  EXPORT Libssh2Config
+  EXPORT libssh2Config
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
@@ -385,15 +385,15 @@ set(RUNTIME_DEPENDENCIES ${_RUNTIME_DEPENDENCIES} CACHE INTERNAL
 
 # Package config
 
-## During package installation, install Libssh2Config.cmake
-install(EXPORT Libssh2Config
+## During package installation, install libssh2Config.cmake
+install(EXPORT libssh2Config
   NAMESPACE Libssh2::
   DESTINATION lib/cmake/libssh2)
 
 ## During build, register directly from build tree
 # create Libssh2Config.cmake
-export(TARGETS libssh2 NAMESPACE Libssh2:: FILE Libssh2Config.cmake)
-export(PACKAGE Libssh2) # register it
+#export(TARGETS libssh2 NAMESPACE Libssh2:: FILE Libssh2Config.cmake)
+#export(PACKAGE Libssh2) # register it in the user's package repository
 
 ## Export a .pc file for client projects not using CMaek
 if(PC_REQUIRES_PRIVATE)
@@ -415,9 +415,9 @@ set_target_properties(libssh2 PROPERTIES
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
-  ${CMAKE_CURRENT_BINARY_DIR}/Libssh2ConfigVersion.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/libssh2ConfigVersion.cmake
   VERSION "${LIBSSH2_VERSION_MAJOR}.${LIBSSH2_VERSION_MINOR}.${LIBSSH2_VERSION_PATCH}"
   COMPATIBILITY SameMajorVersion)
 install(
-  FILES ${CMAKE_CURRENT_BINARY_DIR}/Libssh2ConfigVersion.cmake
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/libssh2ConfigVersion.cmake
   DESTINATION lib/cmake/libssh2)
