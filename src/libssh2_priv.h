@@ -1070,11 +1070,7 @@ void _libssh2_init_if_needed(void);
 #define ARRAY_SIZE(a) (sizeof ((a)) / sizeof ((a)[0]))
 
 /* define to output the libssh2_int64_t type in a *printf() */
-#if defined(__BORLANDC__) || defined(_MSC_VER) || defined(__MINGW32__)
-#define LIBSSH2_INT64_T_FORMAT "I64d"
-#else
-#define LIBSSH2_INT64_T_FORMAT "lld"
-#endif
+#define LIBSSH2_INT64_T_FORMAT PRId64
 
 /* In Windows the default file mode is text but an application can override it.
 Therefore we specify it explicitly. https://github.com/curl/curl/pull/258
